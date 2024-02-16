@@ -8,6 +8,11 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+app.post("/shutdown", (req, res) => {
+  res.send("Shutting down...");
+  process.exit();
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
