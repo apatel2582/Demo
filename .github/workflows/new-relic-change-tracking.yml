@@ -20,7 +20,6 @@ jobs:
           version: "${{ env.RELEASE_VERSION }}"
           user: "${{ github.actor }}"
   run_node_app:
-    needs: newrelic
     runs-on: ubuntu-latest
     name: Start Node.js App
     steps:
@@ -30,12 +29,20 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "16" # Set this to the Node.js version you want to use
+          node-version: "16"
 
       - name: Install dependencies
         run: npm install
         working-directory: ./my-nodejs-app
 
-      - name: Start server
-        run: node server.js
+      - name: Start server in the background
+        run: nohup node server.js &
+        working-directory: ./my-nodejs-app
+
+      - name: Check server health
+        run: curl --fail http://localhost:3000/
+        working-directory: ./my-nodejs-app
+
+      - name: Shutdown server
+        run: curl -X POST http://localhost:3000/shutdown
         working-directory: ./my-nodejs-app
