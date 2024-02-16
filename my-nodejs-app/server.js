@@ -13,6 +13,10 @@ app.post("/shutdown", (req, res) => {
   process.exit();
 });
 
+app.get("/test", (req, res) => {
+  res.send("Testing New Relic!");
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
