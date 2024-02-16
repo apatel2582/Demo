@@ -1,12 +1,13 @@
 // newrelic.js
 "use strict";
+require("dotenv").config();
 exports.config = {
   app_name: ["My NodeJS App"],
-  license_key: "0fef981435df81a2b13741e6c61128f4FFFFNRAL",
+  license_key: process.env.NEW_RELIC_LICENSE_KEY,
   logging: {
     level: "info",
   },
+  distributed_tracing: {
+    enabled: true,
+  },
 };
-distributed_tracing: {
-  enabled: true;
-}
